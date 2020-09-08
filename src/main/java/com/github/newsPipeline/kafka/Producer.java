@@ -16,7 +16,7 @@ public class Producer {
         final Logger logger = LoggerFactory.getLogger(Producer.class);
 
         Properties properties = new Properties();
-        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
+        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapservers);
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
@@ -33,7 +33,7 @@ public class Producer {
                             "Timestamp: " + recordMetadata.timestamp());
 //                    recordMetadata.
                 } else {
-
+                    logger.error("Error while producing");
                 }
             }
         });
