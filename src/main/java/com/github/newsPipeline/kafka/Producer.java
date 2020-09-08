@@ -22,21 +22,24 @@ public class Producer {
 
         KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties);
 
-        ProducerRecord<String, String> record = new ProducerRecord<String, String>("first_topic", "hello world");
-        producer.send(record, new Callback() {
-            public void onCompletion(RecordMetadata recordMetadata, Exception e) {
-                if (e!=null) {
-                    logger.info("Received new metadata. \n" +
-                            "Topic: " + recordMetadata.topic() + "\n" +
-                            "Partition: " + recordMetadata.partition() + "\n" +
-                            "Offset: " + recordMetadata.offset() + "\n" +
-                            "Timestamp: " + recordMetadata.timestamp());
+        for (int i = 0; i < 10; i++) {
+            ProducerRecord<String, String> record = new ProducerRecord<String, String>("first_topic", "hello world");
+            producer.send(record, new Callback() {
+                public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+                    if (e==null) {
+                        logger.info("Received new metadata. \n" +
+                                "Topic: " + recordMetadata.topic() + "\n" +
+                                "Partition: " + recordMetadata.partition() + "\n" +
+                                "Offset: " + recordMetadata.offset() + "\n" +
+                                "Timestamp: " + recordMetadata.timestamp());
 //                    recordMetadata.
-                } else {
-                    logger.error("Error while producing");
+                    } else {
+                        logger.error("Error while producing");
+                    }
                 }
-            }
-        });
+            });
+        }
+
         producer.flush();
         producer.close();
     }
