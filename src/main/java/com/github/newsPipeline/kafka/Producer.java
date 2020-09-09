@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Properties;
 
 public class Producer {
-    private static Object StringSerializer;
-
     public static void main(String[] args) {
         String bootstrapservers = "127.0.0.1:9092";
 
